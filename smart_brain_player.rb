@@ -5,12 +5,12 @@ module SmartBrainPlayer
 
       graph = board.graph
       opponent_current_score, my_current_score = opponent_states.map do |opponent_state|
-        scores(graph,my_state,opponent_state)
+        scores(graph,player_state,opponent_state)
       end.min
       scores_of_moves = board.valid_moves.map do |move|
         speculative_graph = board.with_speculative_move(move){|b| b.graph }
         opponent_score, my_score = opponent_states.map do |opponent_state|
-          my_state.with_speculative_move(move) do |speculative_player_state|
+          player_state.with_speculative_move(move) do |speculative_player_state|
             scores(speculative_graph,speculative_player_state,opponent_state)
           end
         end.min
